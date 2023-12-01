@@ -62,4 +62,6 @@ popup.on("close", () => {
 });
 ```
 
+效果图片
+![Alt text](./image/image.png)
 更多参数设置请看 **'./demo/index.html'** 演示
