@@ -1,0 +1,80 @@
+:root{
+    --tipHeight:10px;
+    --gismap-bgColor:white;
+}
+
+.gismap-popup{
+    position: absolute;
+    height: auto;
+    width: auto;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    background:var(--gismap-bgColor);
+    display: block;
+    flex-direction: column;
+    border-radius: 2px;
+}
+
+
+.gismap-popup-tip-bottom{
+    position: inherit;
+    left: calc(50% -  var(--tipHeight));
+    bottom: calc(-2 * var(--tipHeight));
+    height: 0;
+    border:  var(--tipHeight) solid var(--gismap-bgColor);
+    border-color: var(--gismap-bgColor) transparent transparent transparent;
+}
+
+.gismap-popup-tip-top{
+    position: inherit;
+    left: calc(50% -  var(--tipHeight));
+    top: calc(-2 * var(--tipHeight));
+    height: 0;
+    border:  var(--tipHeight) solid var(--gismap-bgColor);
+    border-color: transparent transparent var(--gismap-bgColor) transparent;
+}
+
+.gismap-popup-tip-left{
+    position: inherit;
+    left: calc(-2 * var(--tipHeight));
+    top: calc(50% -  var(--tipHeight));
+    height: 0;
+    border:  var(--tipHeight) solid var(--gismap-bgColor);
+    border-color: transparent var(--gismap-bgColor) transparent transparent;
+}
+
+.gismap-popup-tip-right{
+    position: inherit;
+    left: 100%;
+    top: calc(50% -  var(--tipHeight));
+    height: 0;
+    border:  var(--tipHeight) solid var(--gismap-bgColor);
+    border-color: transparent transparent transparent var(--gismap-bgColor);
+}
+
+.gismap-popup-top{
+    position: relative;
+    display: flex;
+    justify-content: right;
+}
+
+.gismap-popup-close-button{
+    position: relative;
+    width: auto;
+    height:auto;
+    padding: 0px 8px 4px 8px;
+    transition: all .5s;
+    color: #606266;
+    font-size: 13px;
+}
+
+.gismap-popup-close-button:hover{
+    background: red;
+    cursor: pointer;
+    color: var(--gismap-bgColor);
+}
+
+.gismap-popup-content{
+    position: relative;
+}

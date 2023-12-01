@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.111/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.111/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/Popup.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        #cesiumContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .popup-test {
+            width: auto;
+            height: auto;
+        }
+
+        .hello {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <div id="test">123</div>
+    <script type="module">
+        import Popup from '../index.js';
+
+        //注意： 需要全局变量Cesium,Popup中使用了静态方法
+
+        // 地图
+        const map = new Cesium.Viewer('cesiumContainer', {
+            baseLayer: false,
+            baseLayerPicker: false
+        });
+
+        // 气泡
+        const popup = new Popup({
+            // 气泡背景色
+            bgColor: "white",
+
+            // 气泡定位，如果不写自适应，有"bottom","top","left","right"四种定位
+            // anchor: "bottom",
+
+            // 气泡添加的类名
+            className: "popup-test",
+
+            // 是否显示关闭按钮
+            closeButton: true,
+
+            // 气泡的偏移值，offset[0]为横向偏移值，offset[1]为纵向偏移值
+            offset: [0, 0]
+        });
+
+        // 事件处理器
+        const handler = new Cesium.ScreenSpaceEventHandler(map.scene.canvas);
+
+        // 设置点击事件
+        handler.setInputAction((e) => {
+            const { lng, lat } = getPosition(e.position);
+            // 设置dom节点,可以是ref实例
+            // const el = document.getElementById("test");
+            // popup.setDOMContent(el).setLngLat([lng, lat]).addTo(map);
+
+            // 设置HTML
+            popup.setHTML(`<h1 class="hello">Hello,World !</h1>`).setLngLat([lng, lat]).addTo(map);
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+        // 气泡关闭监听事件
+        popup.on("close", () => {
+            console.log("气泡关闭了!");
+            // setTimeout(() => {
+            //     popup.open();
+            // }, 2000);
+        });
+
+        // 气泡打开监听事件
+        popup.on("open", () => {
+            console.log("气泡打开了!");
+            // setTimeout(() => {
+            //     popup.close();
+            // }, 2000);
+        });
+
+        // 获取坐标
+        function getPosition(position) {
+            const ray = map.camera.getPickRay(position);
+            const cartesian = map.scene.globe.pick(ray, map.scene);
+            const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            const lng = Cesium.Math.toDegrees(cartographic.longitude);
+            const lat = Cesium.Math.toDegrees(cartographic.latitude);
+            const alt = cartographic.height;
+            return {
+                lng,
+                lat,
+                alt,
+            };
+        }
+    </script>
+    </div>
+</body>
+
+</html>

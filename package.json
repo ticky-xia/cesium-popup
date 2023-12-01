@@ -1,0 +1,15 @@
+{
+  "name": "cesium-popup",
+  "version": "1.0.3",
+  "description": "cesium气泡",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xiatiancheng",
+  "license": "ISC",
+  "peerDependencies": {
+    "cesium":">=1.111.0"
+  }
+}
